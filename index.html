@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link href="css/mui.min.css" rel="stylesheet"/>
+<link href="css/common.css" rel="stylesheet"/>
+
+<style type="text/css">
+.J_showPd {
+    width: 44px;
+    height: 44px;
+    background: url(img/scan.jpg) center center no-repeat;
+    display: block;
+    float: right;
+    background-size: 60%;
+}
+</style>
+
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+	<h1 class="mui-title">首页</h1>
+	<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+	<a class="J_showPd fn-hide" id="J_showPd"></a>
+</header>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+mui.init({
+	statusBarBackground: '#f7f7f7',
+	swipeBack: false,
+	subpages:[{
+		url:'list.html',
+		id:'list.html',
+		styles:{
+			top:'45px',//mui标题栏默认高度为45px；
+			bottom:'0px'//默认为0px，可不定义；
+		}
+    }]
+});
+
+mui.plusReady(function(){
+	var _dArr = ['首页'];
+	Util.lStorage.setParam("titLocalArr", JSON.stringify(_dArr));
+	
+	$("#J_showPd").on("tap", function(){
+		initScanPage();
+	})
+})
+
+//添加setTit自定义事件监听
+window.addEventListener('setTit',function(event){
+	//获得事件参数
+	var res = event.detail.res || "",
+		backtype = event.detail.backtype || "",
+		cpageid = event.detail.cpageid || "",
+		_pageTit = $("#header .mui-title");
+	if(backtype){
+		// 返回触发
+		var ctitLocalArr = Util.lStorage.getParam("titLocalArr");
+		if(ctitLocalArr)
+			ctitLocalArr = JSON.parse(ctitLocalArr);
+		ctitLocalArr = ctitLocalArr.splice(0, ctitLocalArr.length-1);
+		_pageTit.text(ctitLocalArr[ctitLocalArr.length - 1]);
+		Util.lStorage.setParam("titLocalArr", JSON.stringify(ctitLocalArr));
+		
+		if(cpageid && cpageid == 'cpage.html'){
+			$("#J_showPd").addClass("fn-hide");
+		}
+	}else{
+		
+		// 新进入页面
+		if(res){
+			_pageTit.text(res);
+			var ctitLocalArr = Util.lStorage.getParam("titLocalArr");
+			if(ctitLocalArr)
+				ctitLocalArr = JSON.parse(ctitLocalArr);
+			ctitLocalArr.push(res);
+			Util.lStorage.setParam("titLocalArr", JSON.stringify(ctitLocalArr));
+			
+			if(cpageid && cpageid == 'cpage.html'){
+				$("#J_showPd").removeClass("fn-hide");
+			}
+		}
+	}
+	
+});
+
+function closeBarcode(){
+	plus.webview.getWebviewById("scanpage.html").close();
+}
+
+window.addEventListener('initScan',function(event){
+	initScanPage();
+})
+
+function initScanPage(){
+	zuiopenW({
+		url: "scanpage.html",
+		id: "scanpage.html"
+	});
+}
+
+</script>
+</body>
+</html>

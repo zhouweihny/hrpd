@@ -1,0 +1,34 @@
+{
+    "code": "0000",
+    "message": "",
+    "totalRows": 30,
+    "pageSize": 10,
+    "currentPage": 1,
+    "page": true,
+    "data": [
+		{
+			"id": "9F79C6F2E14D4ECE8CBA4640BCA22B75",
+			"gg": "规格",
+			"dw": "单位",
+			"cs": "厂商",
+			"cd": "产地",
+			"name": "阿莫西林"
+		},
+		{
+			"id": "9F79C6F2E14D4ECE8CBA4640BCA22B75",
+			"gg": "规格",
+			"dw": "单位",
+			"cs": "厂商",
+			"cd": "产地",
+			"name": "阿莫西林2"
+		},
+		{
+			"id": "9F79C6F2E14D4ECE8CBA4640BCA22B75",
+			"gg": "规格",
+			"dw": "单位",
+			"cs": "厂商",
+			"cd": "产地",
+			"name": "阿莫西林3"
+		}
+	]
+}
